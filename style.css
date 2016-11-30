@@ -1,0 +1,11 @@
+.image {
+   height: 200px;
+    width: 100%;
+    display: block;
+}
+
+i.fa-window-close-o {
+    float: right;
+    color: grey;
+    cursor: pointer;
+}
