@@ -1,61 +1,50 @@
-app.factory('beers', function() {
+app.factory('beers', ['$http', function($http) {
 
-	var beerList = [
-		{
-			id: 0,
-			name: 'Corona',
-			style: 'Pale lager',
-			abv: '4.5%',
-			image: 'img/corona.jpg',
-			rate: 0
+	var beerService = {
+			beers: [],
+
+		addBeer: function(newBeer) {
+			newBeer.id = this.beers.length;
+			beerService.beers.push(newBeer);
+
 		},
-		{
-			id: 1,
-			name: 'Heineken',
-			style: 'Light lager',
-			abv: '5.4%',
-			image: 'img/heineken.jpg',
-			rate: 0
+
+		removeBeer: function(index) {
+			beerService.beers.splice(index, 1);
 		},
-		{
-			id: 2,
-			name: 'Maccabi',
-			style: 'Dark lager',
-			abv: '7.8%',
-			image: 'img/maccabi.jpeg',
-			rate: 0
-		}
 
-	];
+		rateBeer: function(id, rate) {
+				//update rating value of selected beer
+				for (var i = 0; i < this.beers.length; i++) {
+					if(this.beers[i].id === id) {
+						//beer found, change rate
+						this.beers[i].rate = rate;
+						break;
+					}
+				}
 
-	var addBeer = function(newBeer) {
-		newBeer.id = beerList.length;
-		beerList.push(newBeer);
-	};
-
-	var removeBeer = function(index) {
-		beerList.splice(index, 1);
-	};
-
-	var rateBeer = function(id, rate) {
-
-		//update rating value of selected beer
-		for (var i = 0; i < beerList.length; i++) {
-			if(beerList[i].id === id) {
-				//beer found, change rate
-				beerList[i].rate = rate;
-				break;
 			}
-		}
+	};
+
+	beerService.postNewBeer = function() {
 
 	};
 
+	beerService.getAll = function() {
+		return $http.get('/beers').success(function (data) {
+    // this copies the response posts to the client side
+    // 'beers' under 'beerService'
 
-	return {
-		beerList:beerList,
-		addBeer:addBeer,
-		removeBeer:removeBeer,
-		rateBeer:rateBeer
+    console.log(data);
+
+    angular.copy(data, beerService.beers);
+  	});
 	};
 
-});
+	console.log(beerService);
+	console.log(beerService.beer);
+
+	return beerService;
+
+
+}]);

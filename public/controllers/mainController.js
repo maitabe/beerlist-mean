@@ -1,8 +1,17 @@
-app.controller('MainCtrl', function($scope, beers) {
+app.controller('MainCtrl', ['$scope', 'beers', function($scope, beers) {
+  //post new beer
+  // beers.postNewBeer().then(function() {
+  //   $scope.beers = beers.beers;
+  // });
 
-	$scope.beers = beers.beerList;
+  //get the array of beers
+  beers.getAll().then(function() {
+  	$scope.beers = beers.beers;
+  });
 
-	$scope.rate = 0;
+  // $scope.beers = beers.beers;
+
+  $scope.rate = 0;
 
   $scope.max = 5;
   $scope.isReadonly = false;
@@ -49,5 +58,5 @@ app.controller('MainCtrl', function($scope, beers) {
 	};
 
 
-});
+}]);
 

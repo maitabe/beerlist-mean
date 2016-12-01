@@ -15,12 +15,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 //connect public folder to server
 app.use(express.static(__dirname + '/public'));
-app.use('/scripts', express.static(__dirname + '/node_modules/'));
+app.use('/scripts', express.static( __dirname + '/node_modules/'));
 
-
-// app.get('/', function (req, res) {
-//   res.sendFile(__dirname + "/index.html");
-// });
+/*app.get('/', function (req, res) {
+  res.sendFile(__dirname + "/index.html");
+});*/
 
 //example
 /*app.get('/beers', function (req, res) {
@@ -33,11 +32,14 @@ app.use('/scripts', express.static(__dirname + '/node_modules/'));
 app.get('/beers', function (req, res) {
   Beer.find(function (error, beers) {
     res.send(beers);
-    console.log('yooooo');
+    console.log(beers);
   });
 });
 
 app.post('/beers', function (req, res, next) {
+
+  console.log(req.body);
+
   var beer = new Beer(req.body);
 
   beer.save(function(err, beer) {
