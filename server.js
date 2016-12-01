@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 
 mongoose.connect('mongodb://localhost/beers');
 
-var Beer = require("./BeerModel");
+var Beer = require("./model/BeerModel");
 
 var app = express();
 
@@ -13,9 +13,14 @@ app.use(bodyParser.json());   // This is the type of body we're interested in
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.get('/', function (req, res) {
-  res.send("You are inside the fullstack project");
-});
+//connect public folder to server
+app.use(express.static(__dirname + '/public'));
+app.use('/scripts', express.static(__dirname + '/node_modules/'));
+
+
+// app.get('/', function (req, res) {
+//   res.sendFile(__dirname + "/index.html");
+// });
 
 //example
 /*app.get('/beers', function (req, res) {
@@ -42,5 +47,7 @@ app.post('/beers', function (req, res, next) {
   });
 });
 
-app.listen(8000);
+app.listen(8000, function(){
+  console.log('listening');
+});
 
