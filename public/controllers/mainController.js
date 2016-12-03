@@ -1,8 +1,5 @@
 app.controller('MainCtrl', ['$scope', 'beers', function($scope, beers) {
-  //post new beer
-  // beers.postNewBeer().then(function() {
-  //   $scope.beers = beers.beers;
-  // });
+
 
   //get the array of beers
   beers.getAll().then(function() {

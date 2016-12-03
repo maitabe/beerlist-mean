@@ -4,9 +4,16 @@ app.factory('beers', ['$http', function($http) {
 			beers: [],
 
 		addBeer: function(newBeer) {
+			//add new beer locally
 			newBeer.id = this.beers.length;
 			beerService.beers.push(newBeer);
 
+			//add new beer to server
+			$http.post('/beers', newBeer).then(function(inputData){
+				console.log('addBeer succeded');
+			},function(err){
+				console.log('addBeer failed', err);
+			});
 		},
 
 		removeBeer: function(index) {

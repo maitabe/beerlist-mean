@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 
 mongoose.connect('mongodb://localhost/beers');
 
+var port = 8000;
+
 var Beer = require("./model/BeerModel");
 
 var app = express();
@@ -17,18 +19,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/public'));
 app.use('/scripts', express.static( __dirname + '/node_modules/'));
 
-/*app.get('/', function (req, res) {
-  res.sendFile(__dirname + "/index.html");
-});*/
 
-//example
-/*app.get('/beers', function (req, res) {
-  res.json({beers: [
-    { name: '512 IPA', style: 'IPA', image_url: 'http://bit.ly/1XtmB4d', abv: 5 },
-    { name: '512 Pecan Porter', style: 'Porter', image_url: 'http://bit.ly/1Vk5xj4', abv: 4 }
-  ]});
-});*/
+//entry points // routes
 
+// get all beers (method GET only)
 app.get('/beers', function (req, res) {
   Beer.find(function (error, beers) {
     res.send(beers);
@@ -36,6 +30,7 @@ app.get('/beers', function (req, res) {
   });
 });
 
+// add a new beer (method POST only)
 app.post('/beers', function (req, res, next) {
 
   console.log(req.body);
@@ -49,7 +44,20 @@ app.post('/beers', function (req, res, next) {
   });
 });
 
-app.listen(8000, function(){
-  console.log('listening');
+app.listen(port, function(){
+  console.log(' server app is up, listening on', port);
 });
 
+
+/*app.get('/', function (req, res) {
+  res.sendFile(__dirname + "/index.html");
+});*/
+
+//example
+/*app.get('/beers', function (req, res) {
+  res.json({beers: [
+    { name: 'XX', style: 'Dark', image_url: 'http://bit.ly/1XtmB4d', abv: 5 },
+    { name: '512 Pecan Porter', style: 'Porter', image_url: 'http://bit.ly/1Vk5xj4', abv: 4 },
+    { name: 'corona', style: 'light', image_url: 'http://bit.ly/1Vk5xj4', abv: 4 }
+  ]});
+});*/
